@@ -1,0 +1,76 @@
+.confirmation-page { background: #fff; font-family: Inter, "Segoe UI", Arial, sans-serif; }
+.confirmation-header { display: flex; justify-content: center; padding: 20px; background: #fff; }
+.confirmation-header img { width: 180px; height: 55px; object-fit: contain; }
+.confirmation-panel { max-width: 580px; margin: 8px auto; padding: 16px 24px 28px; background: #fff; }
+.confirmation-icon { display: block; width: 56px; height: 56px; margin: 0 auto 20px; fill: var(--green-soft); stroke: var(--green); stroke-width: 2; }
+.confirmation-eyebrow { text-align: center; color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+.confirmation-panel h1 { font-size: 26px; line-height: 1.25; text-align: center; }
+.confirmation-note { color: var(--muted); font-size: 13px; text-align: center; margin: 16px 0 24px; }
+.confirmation-summary h2 { font-size: 18px; }
+.confirmation-product { display: flex; gap: 14px; align-items: center; }
+.confirmation-product img { width: 64px; height: 78px; object-fit: cover; }
+.confirmation-product strong { font-size: 14px; }
+.confirmation-product p { color: var(--muted); font-size: 12px; }
+.confirmation-summary dl { margin: 20px 0; }
+.confirmation-summary dl > div { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; font-size: 13px; }
+.confirmation-summary dd { margin: 0; text-align: right; font-weight: 600; }
+.confirmation-summary .confirmation-total { border-top: 1px solid var(--ink); margin-top: 12px; padding-top: 16px; align-items: center; font-size: 18px; font-weight: 700; }
+.confirmation-total dd { color: var(--red); font-size: 30px; font-weight: 800; }
+.confirmation-back { width: 100%; text-decoration: none; margin-top: 12px; }
+.confirmation-account { margin: 24px 0; padding: 20px; background: var(--pastel-pink); border: 1px solid var(--ink); }
+.confirmation-account h2 { margin: 0 0 8px; font-size: 20px; }
+.confirmation-account p { font-size: 13px; line-height: 1.5; }
+.account-toggle { width: 100%; min-height: 44px; padding: 10px 12px; background: #fff; color: var(--ink); border: 1px solid var(--ink); font-size: 12px; font-weight: 700; cursor: pointer; }
+.confirmation-account form { margin-top: 18px; }
+.confirmation-account label { display: block; margin-top: 14px; font-size: 13px; font-weight: 600; }
+.confirmation-account input { display: block; width: 100%; min-height: 46px; margin-top: 6px; padding: 10px; border: 1px solid #aaa; border-radius: 0; background: #fff; font-size: 16px; }
+.confirmation-account small, .confirmation-account .account-demo-note { color: var(--muted); font-size: 11px; }
+.confirmation-account form > button { margin-top: 18px; }
+.confirmation-account [data-account-feedback] { color: var(--green); }
+.confirmation-delivery { display: flex; align-items: flex-start; gap: 12px; margin: 24px 0; padding: 18px; background: var(--green-soft); border-left: 3px solid var(--green); }
+.confirmation-delivery > svg { width: 28px; height: 28px; flex-shrink: 0; color: var(--green); }
+.confirmation-delivery h2 { margin: 0 0 8px; font-size: 17px; }
+.confirmation-delivery strong { color: var(--green); font-size: 15px; }
+.confirmation-delivery p { margin: 8px 0; font-size: 13px; }
+.confirmation-delivery small { color: var(--muted); font-size: 11px; }
+.account-benefits { list-style: none; padding: 0; margin: 18px 0 22px; display: grid; gap: 16px; }
+.account-benefits li { display: flex; gap: 12px; align-items: flex-start; }
+.account-benefits svg { width: 24px; height: 24px; flex-shrink: 0; }
+.account-benefits strong { display: block; font-size: 14px; }
+.account-benefits small { display: block; margin-top: 3px; font-size: 12px; line-height: 1.5; }
+@media (max-width: 640px) { .confirmation-panel { margin: 16px 12px; padding: 22px 16px; } .confirmation-panel h1 { font-size: 23px; } .confirmation-back { font-size: 14px; } }
+
+/* Confirmation first, delivery second, optional account next; details stay compact. */
+[data-confirmation] { display: flex; flex-direction: column; }
+[data-confirmation][hidden] { display: none; }
+.confirmation-icon { width: 46px; height: 46px; margin-bottom: 14px; }
+.confirmation-panel h1 { margin: 0; font-size: 27px; letter-spacing: -.6px; }
+.confirmation-note { margin: 10px 0 24px; font-size: 14px; }
+.confirmation-delivery { margin: 0; padding: 18px; background: var(--checkout-panel-bg); border: 0; }
+.confirmation-delivery h2 { font-size: 12px; font-weight: 500; color: #536367; }
+.confirmation-delivery strong { display: block; color: var(--ink); font-size: 17px; line-height: 1.4; }
+.confirmation-delivery p { margin-bottom: 0; font-size: 12px; color: #536367; }
+.confirmation-delivery > svg { color: #315a62; width: 25px; height: 25px; }
+.confirmation-account { order: 1; margin: 24px 0 0; padding: 24px; border: 0; }
+.confirmation-account .account-eyebrow { margin: 0 0 9px; font-size: 10px; font-weight: 650; letter-spacing: 1.2px; color: #835a62; }
+.confirmation-account h2 { font-size: 23px; line-height: 1.2; letter-spacing: -.4px; }
+.confirmation-account > p:not(.account-eyebrow) { margin: 9px 0 0; color: #62585a; }
+.account-benefits { margin: 22px 0; gap: 17px; }
+.account-benefits svg { width: 22px; height: 22px; stroke-width: 1.5; }
+.account-benefits strong { font-size: 13px; font-weight: 650; }
+.account-benefits small { color: #6a6062; }
+.account-toggle { min-height: 48px; background: var(--red); color: #fff; box-shadow: 3px 3px 0 var(--ink); font-size: 13px; font-weight: 750; }
+.account-toggle[aria-expanded="true"] { background: transparent; box-shadow: none; color: var(--ink); }
+.confirmation-summary { order: 2; border-top: 1px solid #d9dfe0; border-bottom: 1px solid #d9dfe0; margin-top: 24px; }
+.confirmation-summary summary { cursor: pointer; list-style: none; display: flex; gap: 14px; align-items: center; padding: 17px 0; font-size: 14px; font-weight: 650; }
+.confirmation-summary summary::-webkit-details-marker { display: none; }
+.confirmation-summary summary > span { flex: 1; }
+.confirmation-summary summary small { display: block; margin-top: 3px; font-size: 11px; font-weight: 400; color: var(--muted); }
+.confirmation-summary summary > strong { font-size: 20px; }
+.confirmation-summary summary svg { width: 18px; height: 18px; }
+.confirmation-summary[open] summary svg { transform: rotate(180deg); }
+.confirmation-summary .confirmation-total { font-size: 15px; }
+.confirmation-total dd { font-size: 20px; }
+.confirmation-back { display: block; width: fit-content; margin: 24px auto; text-decoration: underline; text-underline-offset: 4px; color: var(--ink); font-size: 13px; }
+.confirmation-demo { margin: 0 auto; max-width: 380px; text-align: center; color: var(--muted); font-size: 10px; line-height: 1.5; }
+@media (max-width: 640px) { .confirmation-panel { margin: 0 auto; padding: 12px 18px 24px; } .confirmation-panel h1 { font-size: 25px; } .confirmation-account { padding: 21px 18px; } }

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confirmare comandă | ePieleNaturala.ro</title>
+  <link rel="stylesheet" href="commerce-flow.css?v=4.12" />
+  <link rel="stylesheet" href="confirmare.css?v=4" />
+</head>
+<body class="confirmation-page">
+  <header class="confirmation-header"><a href="index.html"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /></a></header>
+  <main class="confirmation-panel">
+    <div data-confirmation hidden>
+      <svg class="confirmation-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/><path d="m14 24 7 7 14-14"/></svg>
+      <h1>Mulțumim pentru comandă!</h1>
+      <p class="confirmation-note">Iată detaliile livrării tale.</p>
+      <section class="confirmation-delivery" aria-labelledby="delivery-estimate-title">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v11H3V6Zm11 4h4l3 4v3h-7v-7Z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+        <div><h2 id="delivery-estimate-title">Când ajunge coletul?</h2><strong data-delivery-estimate></strong><p data-delivery-explanation></p></div>
+      </section>
+      <details class="confirmation-summary" aria-label="Sumarul comenzii">
+        <summary><span>Comanda ta <small>Vezi detaliile</small></span><strong data-summary-total></strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <div class="confirmation-product"><img src="assets/pv970-gallery-1.webp" alt="Sandale roșii PV970" /><div><strong>Sandale din piele naturală PV970</strong><p data-order-product></p></div></div>
+        <p data-order-upsell hidden>Sandale negre din piele naturală · 1 buc.</p>
+        <dl>
+          <div><dt>Subtotal</dt><dd data-order-subtotal></dd></div>
+          <div data-order-discount-row hidden><dt>Reducere</dt><dd data-order-discount></dd></div>
+          <div><dt>Livrare</dt><dd data-order-shipping></dd></div>
+          <div><dt>Metoda de livrare</dt><dd data-order-delivery></dd></div>
+          <div><dt>Metoda de plată</dt><dd data-order-payment></dd></div>
+          <div class="confirmation-total"><dt>Total</dt><dd data-order-total></dd></div>
+        </dl>
+      </details>
+      <section class="confirmation-account" data-guest-account hidden aria-labelledby="account-title">
+        <p class="account-eyebrow">TOTUL ÎNTR-UN SINGUR LOC</p>
+        <h2 id="account-title">Comanda ta, mereu la îndemână.</h2>
+        <p>Creează un cont gratuit, dacă vrei să gestionezi mai ușor comenzile.</p>
+        <ul class="account-benefits">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg><span><strong>Urmărești comanda</strong><small>Vezi statusul și urmărești livrarea din cont.</small></span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8A8 8 0 0 0 6 5L3 8m0-5v5h5M4 16a8 8 0 0 0 14 3l3-3m0 5v-5h-5"/></svg><span><strong>Soliciți schimb sau retur</strong><small>Trimiți cererea direct din cont și urmărești soluționarea.</small></span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span><strong>Ai comenzile la îndemână</strong><small>Consulți istoricul și economisești timp la următoarea comandă.</small></span></li>
+        </ul>
+        <button class="account-toggle" type="button" aria-expanded="false" aria-controls="create-account-form">CREEAZĂ CONT GRATUIT →</button>
+        <form id="create-account-form" hidden>
+          <label>Email<input type="email" name="accountEmail" autocomplete="email" required /></label>
+          <label>Parolă<input type="password" name="accountPassword" autocomplete="new-password" minlength="8" required aria-describedby="password-hint" /></label>
+          <small id="password-hint">Minimum 8 caractere.</small>
+          <label>Confirmă parola<input type="password" name="accountPasswordConfirm" autocomplete="new-password" minlength="8" required /></label>
+          <button class="account-toggle" type="submit">CREEAZĂ CONTUL</button>
+          <p class="account-demo-note">Formular demonstrativ: contul nu va fi creat, iar parola nu este salvată sau trimisă.</p>
+          <p data-account-feedback role="status" hidden></p>
+        </form>
+      </section>
+    </div>
+    <div data-no-order hidden><h1>Nu există o comandă de test de afișat.</h1><p>Poți începe din pagina produsului.</p></div>
+    <a class="confirmation-back" href="index.html">Continuă cumpărăturile <span aria-hidden="true">→</span></a>
+    <p class="confirmation-demo">Previzualizare demonstrativă · Nu s-a înregistrat o comandă reală și nu s-a efectuat nicio plată.</p>
+  </main>
+  <script src="delivery-estimate.js?v=2"></script>
+  <script src="confirmare.js?v=4"></script>
+</body>
+</html>

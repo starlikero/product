@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Checkout securizat ePieleNaturala.ro" />
+  <title>Finalizează comanda | ePieleNaturala.ro</title>
+  <link rel="stylesheet" href="commerce-flow.css?v=4.11" />
+</head>
+<body data-page="checkout">
+  <svg class="svg-defs" aria-hidden="true">
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-exchange" viewBox="0 0 24 24"><path d="M20 8a8 8 0 0 0-14-3L3 8m0-5v5h5M4 16a8 8 0 0 0 14 3l3-3m0 5v-5h-5"/></symbol>
+    <symbol id="i-quality" viewBox="0 0 24 24"><path d="m12 2 3 2 3.5.5.5 3.5 2 4-2 3-.5 3.5-3.5.5-3 3-3-3-3.5-.5L5 15l-2-3 2-4 .5-3.5L9 4Z"/><path d="m8 12 2.5 2.5L16 9"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v11H3V6Zm11 4h4l3 4v3h-7v-7Z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M7 9a3 3 0 0 1-1 1M17 15a3 3 0 0 1 1-1"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  </svg>
+
+  <header class="flow-header checkout-header">
+    <div class="flow-header-inner">
+      <a class="checkout-back-button" href="index.html?cart=open" aria-label="Înapoi la coș"><svg><use href="#i-chevron"/></svg></a>
+      <a class="flow-brand" href="index.html"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /></a>
+    </div>
+  </header>
+
+  <main class="flow-main checkout-main">
+    <nav class="checkout-path" aria-label="Progresul comenzii">
+      <ol>
+        <li class="is-complete"><span>1.</span> Coșul meu</li>
+        <li class="is-active" aria-current="step"><span>2.</span> Date de livrare</li>
+        <li><span>3.</span> Comandă trimisă</li>
+      </ol>
+    </nav>
+
+    <div class="checkout-account-tabs" role="tablist" aria-label="Tip comandă">
+      <button type="button" role="tab" aria-selected="false" data-account-tab="login">AM DEJA CONT</button>
+      <button type="button" role="tab" aria-selected="true" class="is-active" data-account-tab="guest">COMANDĂ FĂRĂ CONT</button>
+    </div>
+
+    <section class="flow-card checkout-login-panel" data-account-panel="login" hidden aria-labelledby="login-title">
+      <h1 id="login-title">Autentificare</h1>
+      <div class="form-grid checkout-single-fields">
+        <label class="field"><span>Email</span><input type="email" autocomplete="email" placeholder="exemplu@email.ro" /></label>
+        <label class="field"><span>Parolă</span><input type="password" autocomplete="current-password" /></label>
+      </div>
+      <label class="check-row"><input type="checkbox" /><span>Păstrează-mă autentificat</span></label>
+      <button class="checkout-login-button" type="button" data-demo-login><svg><use href="#i-check"/></svg>INTRĂ ÎN CONT</button>
+      <a href="#">Ai uitat parola?</a>
+    </section>
+
+    <form class="checkout-layout" data-checkout-form data-account-panel="guest" novalidate>
+      <div class="checkout-form-column">
+        <section class="flow-card checkout-section" aria-labelledby="contact-title">
+          <div class="numbered-heading"><span>1</span><div><h2 id="contact-title">Date de contact</h2><p>Datele sunt folosite pentru confirmarea comenzii și contactul cu livratorul.</p></div></div>
+          <div class="form-grid checkout-single-fields">
+            <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" placeholder="exemplu@email.ro" required /></label>
+            <label class="field"><span>Telefon</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="07xx xxx xxx" pattern="[0-9 +()-]{9,}" required /></label>
+          </div>
+        </section>
+
+        <section class="flow-card checkout-section" aria-labelledby="address-title">
+          <div class="numbered-heading"><span>2</span><div><h2 id="address-title">Date de livrare</h2><p>Spune-ne unde trimitem coletul.</p></div></div>
+          <div class="form-grid checkout-single-fields">
+            <label class="field"><span>Nume</span><input type="text" name="lastName" autocomplete="family-name" required /></label>
+            <label class="field"><span>Prenume</span><input type="text" name="firstName" autocomplete="given-name" required /></label>
+            <label class="field"><span>Stradă</span><input type="text" name="address" autocomplete="street-address" placeholder="Numele străzii" required /></label>
+            <label class="field"><span>Număr</span><input type="text" name="streetNumber" inputmode="numeric" placeholder="Număr, bloc, scară, apartament" required /></label>
+            <label class="field"><span>Localitate</span><input type="text" name="city" autocomplete="address-level2" required /></label>
+            <label class="field"><span>Județ</span><select name="county" required><option value="">Alege județul</option><option>București</option><option>Cluj</option><option>Iași</option><option>Timiș</option><option>Constanța</option><option>Brașov</option><option>Dolj</option></select></label>
+          </div>
+        </section>
+
+        <section class="flow-card checkout-section" aria-labelledby="delivery-title">
+          <div class="numbered-heading"><span>3</span><div><h2 id="delivery-title">Metoda de livrare</h2><p>Alege cum vrei să primești comanda.</p></div></div>
+          <div class="option-list">
+            <label class="choice-card is-selected"><input type="radio" name="shipping" value="courier" checked /><span class="choice-dot"></span><svg><use href="#i-truck"/></svg><span class="choice-copy"><strong>Curier rapid</strong><small>Ajunge în 1–2 zile lucrătoare</small></span><strong class="choice-price">20 Lei</strong></label>
+            <label class="choice-card"><input type="radio" name="shipping" value="locker" /><span class="choice-dot"></span><svg><use href="#i-pin"/></svg><span class="choice-copy"><strong>Easybox</strong><small>Ridici coletul când îți este comod</small></span><strong class="choice-price">14 Lei</strong></label>
+          </div>
+        </section>
+
+        <section class="flow-card checkout-section" aria-labelledby="payment-title">
+          <div class="numbered-heading"><span>4</span><div><h2 id="payment-title">Metoda de plată</h2><p>Alege varianta în care ai cea mai mare încredere.</p></div></div>
+          <div class="option-list">
+            <label class="choice-card"><input type="radio" name="payment" value="cash" /><span class="choice-dot"></span><svg><use href="#i-cash"/></svg><span class="choice-copy"><strong>Ramburs</strong><small>Plată la curier când primești coletul</small></span><strong class="choice-price">0 Lei</strong></label>
+            <label class="choice-card is-selected"><input type="radio" name="payment" value="card" checked /><span class="choice-dot"></span><svg><use href="#i-card"/></svg><span class="choice-copy"><strong>Plată online cu cardul <mark>RECOMANDAT</mark></strong><small>Plată securizată și confirmare instantă</small></span><strong class="choice-price">0 Lei</strong></label>
+          </div>
+        </section>
+      </div>
+
+      <aside class="checkout-sidebar">
+        <details class="flow-card checkout-summary" aria-labelledby="checkout-summary-title" open>
+          <summary><span><strong id="checkout-summary-title">Sumar comandă</strong></span><b data-mobile-total>199 Lei</b><svg><use href="#i-chevron"/></svg></summary>
+          <div class="checkout-summary-content">
+            <article class="checkout-product"><img src="assets/pv970-gallery-1.webp" alt="Sandale roșii PV970" /><div><span>PV970</span><h3>Sandale damă din piele naturală roșii</h3><p>Roșu · Mărimea <b data-checkout-size>38</b> · Cantitate <b data-checkout-qty>1</b></p></div><strong data-checkout-product-total>179 Lei</strong></article>
+            <article class="checkout-product checkout-upsell-product" data-checkout-upsell hidden><img src="assets/similar-1.jpg" alt="Sandale negre" /><div><span>RECOMANDAT</span><h3>Sandale negre din piele naturală</h3><p>Cantitate 1</p></div><strong>149 Lei</strong></article>
+            <div class="summary-lines">
+              <p><span>Subtotal</span><strong data-subtotal>179 Lei</strong></p>
+              <p class="discount-line" data-discount-row hidden><span>Reducere PIELE10</span><strong data-discount>−18 Lei</strong></p>
+              <p><span>Livrare</span><strong data-shipping-cost>20 Lei</strong></p>
+            </div>
+            <div class="summary-total"><span>Total de plată</span><strong data-grand-total>199 Lei</strong></div>
+            <div class="coupon-box"><strong class="coupon-title">Ai un cod de reducere?</strong><div><input type="text" placeholder="Cod reducere" data-coupon-input /><button type="button" data-apply-coupon>Aplică</button></div><p data-coupon-feedback aria-live="polite"></p></div>
+          </div>
+        </details>
+
+        <section class="flow-card final-consent">
+          <label class="check-row terms-row"><input type="checkbox" name="terms" required /><span>Confirm că am citit și accept <a href="#">Termenii și condițiile</a> și <a href="#">Politica de confidențialitate</a>.</span></label>
+          <label class="check-row"><input type="checkbox" name="newsletter" /><span>Vreau să primesc pe email oferte, promoții și noutăți. Mă pot dezabona oricând.</span></label>
+          <button class="primary-cta place-order" type="submit"><span data-place-order-copy>PLĂTEȘTE 199 LEI</span><b>→</b></button>
+          <div class="checkout-under-cta">
+            <div class="checkout-cta-benefits">
+              <span><svg><use href="#i-truck"/></svg>Livrare rapidă</span>
+              <span><svg><use href="#i-lock"/></svg>Plată securizată</span>
+              <span><svg><use href="#i-exchange"/></svg>Retur simplu și schimb gratuit</span>
+            </div>
+            <div class="checkout-rating-proof">
+              <div class="rating-identity"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /><span class="rating-stars" aria-label="5 stele">★★★★★</span></div>
+              <div class="rating-score"><strong>4,9<span>/5</span></strong><small><svg aria-hidden="true"><use href="#i-shield"/></svg>127+ recenzii verificate</small></div>
+            </div>
+            <div class="checkout-payment-marks" aria-label="Livrare și plăți acceptate">
+              <img src="assets/delivery-gls.svg" alt="GLS" />
+              <img src="assets/payment-visa.svg" alt="Visa" />
+              <img src="assets/payment-mastercard.svg" alt="Mastercard" />
+              <img src="assets/payment-applepay.svg" alt="Apple Pay" />
+              <img src="assets/payment-googlepay.svg" alt="Google Pay" />
+            </div>
+          </div>
+          <p class="form-error" data-form-error role="alert" hidden>Verifică informațiile marcate înainte de a continua.</p>
+        </section>
+
+        <section class="checkout-trust-grid" aria-label="Beneficii comandă">
+          <article><svg aria-hidden="true"><use href="#i-exchange"/></svg><strong>Schimb<br />gratuit</strong></article>
+          <article><svg aria-hidden="true"><use href="#i-quality"/></svg><strong>Calitate<br />verificată</strong></article>
+          <article><svg aria-hidden="true"><use href="#i-shield"/></svg><strong>Plată în<br />siguranță</strong></article>
+        </section>
+        <p class="checkout-sidebar-footer">© Copyright 2026 ePieleNaturala.ro</p>
+      </aside>
+    </form>
+  </main>
+
+  <footer class="flow-footer compact-footer"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /><p>Checkout securizat · Date protejate · Suport pentru comandă</p></footer>
+  <div class="flow-toast" role="status" aria-live="polite" hidden></div>
+  <script src="commerce-flow.js?v=4.13"></script>
+</body>
+</html>
