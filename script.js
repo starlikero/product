@@ -421,7 +421,7 @@ function updateCartPricing() {
   goal.classList.toggle("is-free", free);
   goalCopy.innerHTML = free
     ? "✓ Ai <strong>LIVRARE GRATUITĂ!</strong>"
-    : `Mai adaugă <strong>${remaining} Lei</strong> pentru livrare gratuită.`;
+    : `Mai adaugă de <strong>${remaining} Lei</strong> pentru livrare gratuită.`;
   goalBar.style.width = `${progress}%`;
 }
 
