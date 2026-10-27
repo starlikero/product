@@ -206,7 +206,6 @@ function addToCart(source = "main") {
     addCurrentItemToCart();
     setCartState("success");
     updateCartDrawer();
-    showToast("Produsul a fost adăugat în coș.");
     setTimeout(() => {
       openDrawer($(".cart-drawer"));
       setCartState("default");
@@ -416,8 +415,9 @@ function updateCartPricing() {
   $(".cart-total-saving-value").textContent = `${totalSaving} Lei`;
   $(".cart-total-free-benefit").hidden = !free;
   const totalMeta = $(".cart-total-meta");
-  totalMeta.hidden = free;
-  totalMeta.textContent = free ? "" : `Include cost transport ${shipping} Lei`;
+  totalMeta.hidden = false;
+  totalMeta.classList.toggle("is-free", free);
+  totalMeta.textContent = free ? "Transport GRATUIT" : `incl. transport ${shipping} Lei`;
   goal.classList.toggle("is-free", free);
   goalCopy.innerHTML = free
     ? "✓ Ai <strong>LIVRARE GRATUITĂ!</strong>"
@@ -459,7 +459,7 @@ function renderCartItems() {
     const saving = oldTotal - currentTotal;
     return `<article class="cart-product" data-cart-item="${item.id}">
       <img src="${item.image}" alt="${item.title}" />
-      <div><strong>${item.title}</strong><span>Mărime: <b>${item.size}</b> • Culoare: <b>${item.color}</b></span><p class="cart-product-price-line"><em>${currentTotal} Lei</em><del>${oldTotal} Lei</del><small>Economisești <b>${saving} Lei</b></small></p><div class="cart-quantity-selector"><span>Cantitate</span><div><button type="button" data-cart-decrease="${item.id}" aria-label="Scade cantitatea pentru ${item.title}" ${item.quantity === 1 ? "disabled" : ""}>−</button><output aria-label="Cantitate">${item.quantity}</output><button type="button" data-cart-increase="${item.id}" aria-label="Mărește cantitatea pentru ${item.title}">+</button></div></div></div>
+      <div><strong>${item.title}</strong><span class="cart-product-meta"><span>Mărime: <b>${item.size}</b></span><span>Culoare: <b>${item.color}</b></span></span><p class="cart-product-price-line"><em>${currentTotal} Lei</em><del>${oldTotal} Lei</del><small>Economisești <b>${saving} Lei</b></small></p><div class="cart-quantity-selector"><span>Cantitate</span><div><button type="button" data-cart-decrease="${item.id}" aria-label="Scade cantitatea pentru ${item.title}" ${item.quantity === 1 ? "disabled" : ""}>−</button><output aria-label="Cantitate">${item.quantity}</output><button type="button" data-cart-increase="${item.id}" aria-label="Mărește cantitatea pentru ${item.title}">+</button></div></div></div>
       <button class="cart-item-delete" type="button" data-cart-delete="${item.id}" aria-label="Șterge ${item.title} din coș"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Șterge</span></button>
     </article>`;
   }).join("");
