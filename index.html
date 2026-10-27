@@ -6,6 +6,7 @@
   <meta name="description" content="Prototip CRO mobile-first pentru pagina de produs ePieleNaturala.ro" />
   <title>Sandale damă din piele naturală roșii PV970 | ePieleNaturala — Varianta finală V1</title>
   <link rel="stylesheet" href="styles-modern.css?v=5.2" />
+  <link rel="stylesheet" href="cart-popup.css?v=1.2" />
 </head>
 <body>
   <svg class="svg-defs" aria-hidden="true">
@@ -363,13 +364,6 @@
       <strong>Coșul tău este gol</strong>
       <p>Descoperă recomandările noastre și alege perechea potrivită.</p>
     </div>
-    <div class="cart-total" hidden>
-      <p class="cart-grand-total"><span class="cart-total-label">TOTAL<small class="cart-total-meta">Include cost transport 20 Lei</small></span><span class="cart-total-values"><span class="cart-total-original"><del class="cart-total-original-value">269</del> Lei</span><strong class="cart-total-current">199 Lei</strong></span></p>
-      <p class="cart-total-benefit"><span aria-hidden="true">✓</span><strong>Economisești <b class="cart-total-saving-value">70 Lei</b></strong><span class="cart-total-free-benefit">+ <b>LIVRARE GRATUITĂ</b></span></p>
-    </div>
-    <div class="cart-urgency" hidden><strong>Produsele din coș nu sunt rezervate.</strong><span>Finalizează comanda pentru a nu pierde <strong>mărimea aleasă</strong>.</span></div>
-    <button class="checkout-button" hidden>FINALIZEAZĂ COMANDA <span aria-hidden="true">→</span></button>
-    <button class="cart-continue" type="button" hidden>Continuă cumpărăturile</button>
     <section class="cart-upsell" hidden aria-label="Produse recomandate">
       <div class="cart-upsell-head"><strong>S-ar putea să-ți placă și</strong><div><button type="button" class="cart-carousel-prev" aria-label="Produsul recomandat anterior">←</button><button type="button" class="cart-carousel-next" aria-label="Următorul produs recomandat">→</button></div></div>
       <div class="cart-upsell-track">
@@ -378,6 +372,16 @@
         <article><img src="assets/similar-3.jpg" alt="Sandale din piele naturală kaki" /><strong>Sandale kaki din piele naturală</strong><span>149 Lei</span><button type="button" data-upsell-action>ADAUGĂ ÎN COȘ</button></article>
       </div>
     </section>
+    <div class="cart-footer">
+      <div class="cart-total" hidden>
+        <p class="cart-grand-total"><span class="cart-total-label"><span class="cart-total-word">TOTAL</span><small class="cart-total-meta">incl. transport 20 Lei</small></span><span class="cart-total-values"><span class="cart-total-original"><del class="cart-total-original-value">269</del> Lei</span><strong class="cart-total-current">199 Lei</strong></span></p>
+        <p class="cart-total-benefit"><span aria-hidden="true">✓</span><strong>Economisești <b class="cart-total-saving-value">70 Lei</b></strong><span class="cart-total-free-benefit">+ <b>LIVRARE GRATUITĂ</b></span></p>
+      </div>
+      <div class="cart-urgency" hidden><strong>Produsele din coș nu sunt rezervate.</strong><span>Finalizează comanda ca să nu pierzi <strong>mărimea aleasă</strong>.</span></div>
+      <button class="checkout-button" hidden>FINALIZEAZĂ COMANDA <span aria-hidden="true">→</span></button>
+      <ul class="cart-trust" aria-label="Garanții comandă"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Plată la livrare</li><li><svg aria-hidden="true"><use href="#i-refresh"/></svg>Schimb mărime gratuit</li><li><svg aria-hidden="true"><use href="#i-shield"/></svg>Retur 14 zile</li></ul>
+      <button class="cart-continue" type="button" hidden>Continuă cumpărăturile</button>
+    </div>
   </aside>
 
   <div class="modal-backdrop" hidden></div>
@@ -462,6 +466,6 @@
   </dialog>
 
   <div class="toast" role="status" aria-live="polite">Produsul a fost adăugat în coș.</div>
-  <script src="script.js?v=5.0"></script>
+  <script src="script.js?v=5.3"></script>
 </body>
 </html>
