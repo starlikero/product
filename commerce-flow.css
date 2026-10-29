@@ -924,3 +924,11 @@ body[data-page="checkout"] .coupon-row { margin-top: 8px; }
 /* Rândul cu recenzii ~25% mai mare (13px → 16px) */
 body[data-page="checkout"] .checkout-assurance .assurance-rating { font-size: 16px; }
 body[data-page="checkout"] .assurance-stars { font-size: 17px; }
+/* Mobil: zona albastră de jos merge până la capătul paginii, fără bandă albă dedesubt */
+@media (max-width: 900px) {
+  body[data-page="checkout"] .checkout-main { padding-bottom: 0 !important; }
+  body[data-page="checkout"] .checkout-sidebar { padding-bottom: env(safe-area-inset-bottom) !important; }
+  body[data-page="checkout"] .checkout-sidebar-footer { margin-bottom: 0; padding-bottom: 14px; }
+  /* la „tragerea” paginii peste capăt (iPhone), sub pagină se vede tot albastru, nu alb */
+  html:has(body[data-page="checkout"]) { background: linear-gradient(#fff 50%, var(--checkout-panel-bg) 50%); }
+}
