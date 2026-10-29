@@ -1037,7 +1037,7 @@ body[data-page="checkout"] .coupon-applied b { display: block; font-size: 14px; 
 body[data-page="checkout"] .coupon-applied small { display: block; margin-top: 1px; color: var(--green); font-size: 12px; font-weight: 600; }
 body[data-page="checkout"] .coupon-applied button { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; color: var(--ink); background: none; border: 0; font-size: 24px; line-height: 1; cursor: pointer; }
 /* Culoarea fundalului din zona de sumar + buton (doar checkout) */
-html:has(body[data-page="checkout"]), body[data-page="checkout"] { --checkout-panel-bg: #e6fcfb; }
+html:has(body[data-page="checkout"]), body[data-page="checkout"] { --checkout-panel-bg: #f0f7f7; }
 body[data-page="checkout"] .checkout-summary .coupon-box.coupon-top { margin: 0 0 20px !important; padding-bottom: 16px !important; }
 /* Header desktop robust: logo centrat deasupra formularului, săgeata fixată la marginea formularului — nu se mai suprapun */
 @media (min-width: 901px) {
