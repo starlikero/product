@@ -4,7 +4,7 @@
    de la commerce-flow.css?v=... (ex. v=39 -> v=40), altfel telefonul
    poate arăta culoarea veche din cache.
    ===================================================================== */
-html:has(body[data-page="checkout"]), body[data-page="checkout"] { --checkout-panel-bg: #edfcfa; }
+html:has(body[data-page="checkout"]), body[data-page="checkout"] { --checkout-panel-bg: #fbfaf7; }
 
 :root {
   --red: #e31d2b;
