@@ -1195,3 +1195,20 @@ body[data-page="checkout"] .login-short { display: none; }
 body[data-page="checkout"] .login-long { display: none !important; }
 body[data-page="checkout"] .login-short { display: inline !important; }
 body[data-page="checkout"] .checkout-header .login-link.is-logged .login-short::after { content: " ✓"; }
+
+/* Sumar comandă colapsabil pe mobil/tabletă (≤900px); pe desktop rămâne mereu deschis */
+body[data-page="checkout"] .summary-toggle{display:flex;align-items:center;gap:10px;width:100%;padding:0;margin:0 0 6px;background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+body[data-page="checkout"] .summary-toggle .section-title{margin:0 !important;flex:0 0 auto}
+.summary-thumbs{display:flex;margin-left:auto}
+.summary-thumbs img{width:34px;height:34px;object-fit:cover;border-radius:4px;border:1.5px solid #fff;background:#fff;box-shadow:0 0 0 1px rgba(24,23,22,.15)}
+.summary-thumbs img+img{margin-left:-12px}
+.summary-meta{white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;line-height:1.2;font-size:14px;font-weight:600}
+.summary-meta small{white-space:nowrap;font-size:13px;font-weight:400;text-decoration:underline;text-underline-offset:2px;color:#4b4a48}
+.summary-chev{flex:0 0 32px;width:32px;height:24px;fill:none;stroke:currentColor;stroke-width:2;transition:transform .2s}
+.summary-toggle[aria-expanded="true"] .summary-chev{transform:rotate(180deg)}
+.summary-details[hidden]{display:none !important}
+@media (min-width:901px){
+body[data-page="checkout"] .summary-toggle{cursor:default;pointer-events:none}
+.summary-thumbs,.summary-meta,.summary-chev{display:none !important}
+.summary-details[hidden]{display:block !important}
+}
