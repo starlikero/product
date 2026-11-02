@@ -290,3 +290,12 @@
 
   update();
 })();
+
+// Sumar comandă colapsabil (mobil): număr produse + poze mici, detalii la apăsare
+(()=>{const t=document.querySelector('.summary-toggle');if(!t)return;const d=document.getElementById('summary-details'),
+th=document.querySelector('[data-summary-thumbs]'),c=document.querySelector('[data-summary-count]'),h=document.querySelector('[data-summary-hint]');
+t.addEventListener('click',()=>{const o=t.getAttribute('aria-expanded')!=='true';t.setAttribute('aria-expanded',o);d.hidden=!o;h.textContent=o?'Ascunde detalii':'Vezi detalii';});
+const sync=()=>{const items=[...d.querySelectorAll('[data-checkout-items] .checkout-product')];
+let n=0;items.forEach(a=>{const m=a.querySelector('p').textContent.match(/Cantitate\s*(\d+)/);n+=m?+m[1]:1;});
+c.textContent=n===1?'1 produs':n+' produse';th.innerHTML=items.slice(0,3).map(a=>`<img src="${a.querySelector('img').getAttribute('src')}" alt="">`).join('');};
+new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]'),{childList:true,subtree:true});sync();})();
