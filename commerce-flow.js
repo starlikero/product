@@ -301,13 +301,13 @@ let n=0;items.forEach(a=>{const m=a.querySelector('p').textContent.match(/Cantit
 c.textContent=n===1?'1 produs':n+' produse';th.innerHTML=items.slice(0,3).map(a=>`<img src="${a.querySelector('img').getAttribute('src')}" alt="">`).join('');};
 new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]'),{childList:true,subtree:true});sync();})();
 
-// Județ + Localitate: ambele se pot scrie, iar sugestiile sunt lista nativă a telefonului (<datalist>).
+// Județ + Localitate: listă care apare imediat la atingere; poți scrie (filtrează) sau derula și alege.
+// Precompletarea telefonului merge (sunt căsuțe text cu autocomplete). Fără zoom pe iOS (text 16px).
 // DEMO: listă scurtă de localități. LIVE: lista completă din Avanticart / nomenclatorul GLS.
 (() => {
   const county = document.querySelector("[data-county]");
   const city = document.querySelector("[data-city]");
   if (!county || !city || county.tagName !== "INPUT") return;
-  const countyList = document.getElementById("county-list"), cityList = document.getElementById("city-list");
   const RAW = {
     "Alba": "Alba Iulia,Sebeș,Aiud,Blaj",
     "Arad": "Arad,Ineu,Pecica",
@@ -352,39 +352,136 @@ new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]
     "Vâlcea": "Râmnicu Vâlcea,Drăgășani,Horezu",
     "Vrancea": "Focșani,Adjud"
   };
-  const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const COUNTY_NAMES = Object.keys(RAW);
   const PLACES = Object.entries(RAW).flatMap(([c, n]) => n.split(",").map((name) => ({ name, county: c })));
-  const opt = (v, label) => { const o = document.createElement("option"); o.value = v; if (label) o.label = label; return o; };
-  countyList.replaceChildren(...COUNTY_NAMES.map((c) => opt(c)));
   const findCounty = (v) => { const k = norm(v).replace(/^(judetul|jud\.?|municipiul)\s*/, ""); return COUNTY_NAMES.find((c) => norm(c) === k); };
-  // localitățile se filtrează după județ; fără județ, apar toate, cu județul alături
-  const fillCities = () => {
-    const c = findCounty(county.value);
-    const items = c ? PLACES.filter((p) => p.county === c) : PLACES;
-    cityList.replaceChildren(...items.map((p) => opt(p.name, c ? "" : "jud. " + p.county)));
-  };
   const setValid = (el, ok) => { const f = el.closest(".field"); f.classList.toggle("is-invalid", !ok); f.classList.toggle("is-valid", ok); };
-  // județ: „brasov” → „Brașov”; dacă nu există, cere corectare
+
+  // sursele listelor
+  const countyItems = () => COUNTY_NAMES.map((c) => ({ value: c }));
+  const cityItems = () => {
+    const c = findCounty(county.value);
+    return (c ? PLACES.filter((p) => p.county === c) : PLACES).map((p) => ({ value: p.name, county: p.county, note: c ? "" : "jud. " + p.county }));
+  };
+  // corectări (scris fără diacritice, precompletare „Județul X”)
   const fixCounty = () => {
     if (!county.value.trim()) return;
     const c = findCounty(county.value);
-    if (c) county.value = c;
+    if (c) {
+      const changed = county.value !== c && county.dataset.last !== c;
+      county.value = c;
+      // localitatea veche din alt județ nu mai e valabilă
+      const old = PLACES.find((p) => p.name === city.value);
+      if (old && old.county !== c) { city.value = ""; city.closest(".field").classList.remove("is-valid", "is-invalid"); }
+      county.dataset.last = c;
+      if (changed) county.dispatchEvent(new Event("change", { bubbles: true }));
+    }
     setValid(county, !!c);
-    fillCities();
   };
-  // localitate: corectează diacriticele dacă e în listă; dacă județul lipsește, îl completează
   const fixCity = () => {
-    const v = city.value; if (!v.trim()) return;
+    if (!city.value.trim()) return;
     const c = findCounty(county.value);
-    const hit = PLACES.find((p) => norm(p.name) === norm(v) && (!c || p.county === c));
-    if (hit) { city.value = hit.name; if (!c) { county.value = hit.county; setValid(county, true); fillCities(); } }
+    const hit = PLACES.find((p) => norm(p.name) === norm(city.value) && (!c || p.county === c));
+    if (hit) {
+      city.value = hit.name;
+      if (!c) { county.value = hit.county; county.dataset.last = hit.county; setValid(county, true); }
+    }
   };
-  county.addEventListener("input", () => { if (findCounty(county.value)) fixCounty(); else fillCities(); });
-  county.addEventListener("change", fixCounty);
-  county.addEventListener("blur", fixCounty);
-  city.addEventListener("input", () => { if (PLACES.some((p) => p.name === city.value)) fixCity(); });
-  city.addEventListener("change", fixCity);
-  city.addEventListener("blur", fixCity);
-  fillCities();
+
+  const combo = (input, getItems, onPick, fix, isKnown) => {
+    const field = input.closest(".field");
+    const list = field.querySelector(".combo-list");
+    let shown = [], active = -1, typed = false, touching = false;
+
+    const fit = () => {
+      // lista încape între câmp și tastatură / bara Safari
+      const vv = window.visualViewport;
+      const bottom = vv ? vv.offsetTop + vv.height : innerHeight;
+      const top = input.getBoundingClientRect().bottom;
+      list.style.maxHeight = Math.max(150, Math.min(320, bottom - top - 12)) + "px";
+    };
+    const render = () => {
+      const q = typed ? norm(input.value) : "";
+      const all = getItems();
+      if (q) {
+        const starts = (it) => norm(it.value).startsWith(q);
+        const word = (it) => norm(it.value).split(/[\s-]/).some((w) => w.startsWith(q));
+        shown = all.filter((it) => word(it) || norm(it.value).includes(q))
+          .sort((a, b) => starts(b) - starts(a) || word(b) - word(a) || a.value.localeCompare(b.value, "ro"));
+      } else shown = all;
+      const mark = (v) => {
+        if (!q) return esc(v);
+        const i = norm(v).indexOf(q);
+        return i < 0 ? esc(v) : esc(v.slice(0, i)) + "<b>" + esc(v.slice(i, i + q.length)) + "</b>" + esc(v.slice(i + q.length));
+      };
+      const current = input.value;
+      list.innerHTML = shown.length
+        ? shown.map((it, i) => `<li role="option" id="${list.id}-${i}" data-i="${i}"${it.value === current ? ' aria-selected="true"' : ""}><span class="combo-name">${mark(it.value)}</span>${it.note ? `<span class="combo-note">${esc(it.note)}</span>` : ""}</li>`).join("")
+        : `<li class="combo-empty">Nu am găsit. Scrie complet${input === city ? " localitatea" : ""}.</li>`;
+      active = -1;
+      open();
+    };
+    const open = () => {
+      field.classList.add("is-open");
+      list.hidden = false; input.setAttribute("aria-expanded", "true"); fit();
+      const sel = list.querySelector('[aria-selected="true"]');
+      if (sel && !typed) list.scrollTop = sel.offsetTop - 4;
+    };
+    const close = () => { field.classList.remove("is-open"); list.hidden = true; input.setAttribute("aria-expanded", "false"); active = -1; };
+    const pick = (i) => {
+      const it = shown[i]; if (!it) return;
+      input.value = it.value; typed = false; close();
+      onPick(it);
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+
+    input.addEventListener("focus", () => {
+      typed = false; render();
+      // urcă câmpul sus pe ecran, ca lista să aibă loc deasupra tastaturii
+      if (matchMedia("(max-width: 900px)").matches) setTimeout(() => {
+        const y = field.getBoundingClientRect().top + scrollY - 28;
+        window.scrollTo({ top: y, behavior: "smooth" });
+        setTimeout(fit, 350);
+      }, 250);
+    });
+    input.addEventListener("click", () => { if (list.hidden) { typed = false; render(); } });
+    input.addEventListener("input", (e) => {
+      // precompletarea (telefon/browser) nu deschide lista: doar corectează valoarea
+      const auto = document.activeElement !== input || ((!e.inputType || e.inputType === "insertReplacementText") && isKnown(input.value));
+      if (auto) { close(); fix(); return; }
+      typed = true; render();
+    });
+    input.addEventListener("blur", () => setTimeout(() => { if (!touching && document.activeElement !== input) { close(); fix(); } }, 180));
+    input.addEventListener("keydown", (e) => {
+      if (list.hidden) return;
+      const items = [...list.querySelectorAll("li[data-i]")];
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault(); if (!items.length) return;
+        active = (active + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+        items.forEach((li, i) => li.classList.toggle("is-active", i === active));
+        items[active].scrollIntoView({ block: "nearest" });
+        input.setAttribute("aria-activedescendant", items[active].id);
+      } else if (e.key === "Enter") {
+        if (active >= 0) { e.preventDefault(); pick(active); }
+        else if (shown.length === 1 && typed) { e.preventDefault(); pick(0); }
+      } else if (e.key === "Escape") close();
+    });
+    // derularea listei nu închide lista; atingerea (fără derulare) alege
+    list.addEventListener("touchstart", () => { touching = true; }, { passive: true });
+    list.addEventListener("touchend", () => setTimeout(() => { touching = false; }, 400), { passive: true });
+    list.addEventListener("mousedown", (e) => e.preventDefault());
+    // lista e în <label>: fără preventDefault, click-ul ar reactiva câmpul
+    list.addEventListener("click", (e) => { e.preventDefault(); const li = e.target.closest("li[data-i]"); if (li) pick(+li.dataset.i); });
+    document.addEventListener("pointerdown", (e) => { if (!field.contains(e.target)) { touching = false; if (!list.hidden && document.activeElement !== input) { close(); fix(); } } });
+    field.querySelector(".combo-chev")?.addEventListener("click", (e) => { e.preventDefault(); if (list.hidden) input.focus(); else { close(); input.blur(); } });
+    window.visualViewport?.addEventListener("resize", () => { if (!list.hidden) fit(); });
+    // precompletarea telefonului trimite „change” fără să deschidă lista
+    input.addEventListener("change", () => { if (list.hidden) fix(); });
+    return { close };
+  };
+
+  combo(county, countyItems, () => { fixCounty(); city.focus(); }, fixCounty, (v) => !!findCounty(v));
+  combo(city, cityItems, (it) => { if (it.county && !findCounty(county.value)) { county.value = it.county; county.dataset.last = it.county; setValid(county, true); } setValid(city, true); }, fixCity, (v) => PLACES.some((p) => norm(p.name) === norm(v)));
 })();
