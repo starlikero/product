@@ -1212,3 +1212,22 @@ body[data-page="checkout"] .summary-toggle{cursor:default;pointer-events:none}
 .summary-thumbs,.summary-meta,.summary-chev{display:none !important}
 .summary-details[hidden]{display:block !important}
 }
+
+/* Județ + Localitate: listă proprie sub câmp (scrii sau derulezi și alegi) */
+body[data-page="checkout"] .combo-field { position: relative; }
+body[data-page="checkout"] .combo-field input { padding-right: 44px; font-size: 16px; }
+body[data-page="checkout"] .combo-field.is-valid input { padding-right: 70px; background-position: right 42px center; }
+body[data-page="checkout"] .combo-chev { position: absolute; right: 1px; top: 1px; width: 42px; height: 45px; display: grid; place-items: center; cursor: pointer; }
+body[data-page="checkout"] .combo-chev svg { width: 20px; height: 20px; fill: none; stroke: var(--ink); stroke-width: 2; transition: transform .2s; }
+body[data-page="checkout"] .combo-field.is-open .combo-chev svg { transform: rotate(180deg); }
+body[data-page="checkout"] .combo-field.is-open input { border-color: var(--ink); border-radius: 4px 4px 0 0; }
+body[data-page="checkout"] .combo-list { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% - 1px); margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--ink); border-top-color: rgba(24,23,22,.15); border-radius: 0 0 6px 6px; box-shadow: 0 10px 24px rgba(24,23,22,.16); max-height: 320px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+body[data-page="checkout"] .combo-list[hidden] { display: none; }
+body[data-page="checkout"] .combo-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-height: 46px; padding: 12px 14px; font-size: 16px; font-weight: 400; line-height: 1.3; color: var(--ink); cursor: pointer; }
+body[data-page="checkout"] .combo-list li + li { border-top: 1px solid rgba(24,23,22,.08); }
+body[data-page="checkout"] .combo-list li b { font-weight: 700; }
+body[data-page="checkout"] .combo-list li.is-active, body[data-page="checkout"] .combo-list li:hover { background: var(--checkout-panel-bg); }
+body[data-page="checkout"] .combo-list li[aria-selected="true"] { font-weight: 700; }
+body[data-page="checkout"] .combo-list .combo-name { flex: 1 1 auto; min-width: 0; }
+body[data-page="checkout"] .combo-list .combo-note { flex: 0 0 auto; font-size: 14px; color: #6b6a68; white-space: nowrap; }
+body[data-page="checkout"] .combo-list .combo-empty { color: #6b6a68; font-size: 14px; cursor: default; background: none !important; }
