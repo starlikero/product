@@ -21,7 +21,7 @@ html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
 .ty-side { flex: 1; padding: 24px 16px calc(28px + env(safe-area-inset-bottom)); background: var(--ty-mint); }
 .ty-side > * { width: 100%; max-width: 528px; margin-left: auto; margin-right: auto; }
 
-.ty-parcel { position: relative; margin-top: 22px; padding: 20px 18px 6px; background: #fef8f8; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
+.ty-parcel { position: relative; margin-top: 22px; padding: 20px 18px 6px; background: #fff; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
 .ty-parcel-head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding-top: 6px; }
 .ty-parcel-thumbs { display: flex; justify-self: start; }
 .ty-parcel-thumbs img { width: 56px; height: 76px; object-fit: cover; border-radius: 4px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(24,23,22,.2); background: #fff; }
@@ -59,7 +59,7 @@ html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
 .ty-page sup.dec { font-size: .6em; }
 
 /* 2. Cont — card alb pe fundalul mentă, cu chenarul și umbra din site */
-.ty-account { margin-top: 0; padding: 24px 18px 22px; background: #fff; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
+.ty-account { margin-top: 0; padding: 24px 18px 22px; background: #f2fcfc; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
 .ty-account h2 { margin: 0; font-size: 23px; line-height: 1.2; font-weight: 800; }
 .ty-account-lead { margin: 8px 0 0; font-size: 16px; line-height: 1.45; }
 .ty-benefits { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
@@ -67,7 +67,7 @@ html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
 .ty-benefits li::before { content: ""; position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #181716 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") no-repeat center / 12px; }
 .ty-account-form { margin-top: 20px; padding-top: 18px; display: grid; gap: 16px; border-top: 1px solid var(--ty-line); }
 .ty-email-known span { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-.ty-email-known b { display: block; padding: 13px 14px; font-size: 16px; font-weight: 600; background: #f2fcfc; border: 1px solid var(--ty-line); border-radius: 4px; word-break: break-all; }
+.ty-email-known b { display: block; padding: 13px 14px; font-size: 16px; font-weight: 600; background: #fff; border: 1px solid var(--ty-line); border-radius: 4px; word-break: break-all; }
 .ty-field { position: relative; display: block; }
 .ty-field[hidden] { display: none; }
 .ty-field > span { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
@@ -90,7 +90,7 @@ html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
 .ty-account-done small { display: block; margin-top: 4px; font-size: 15px; line-height: 1.4; }
 
 /* 3. Ce ai ales — card la fel ca celelalte, cu inimioare */
-.ty-order { margin-top: 26px; padding: 20px 18px 18px; background: #fff; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
+.ty-order { margin-top: 26px; padding: 20px 18px 18px; background: #f2fcfc; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
 .ty-order h2 { display: flex; align-items: center; gap: 9px; margin: 0 0 6px; font-size: 21px; line-height: 1.2; font-weight: 800; }
 .ty-order h2 small { margin-left: auto; font-size: 15px; font-weight: 500; color: var(--muted); }
 .ty-order-lead { margin: 0 0 6px; font-size: 15px; line-height: 1.45; color: var(--muted); }
@@ -112,7 +112,7 @@ html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
 .ty-sum-lines .ty-sum-total { margin-top: 6px; padding-top: 9px; border-top: 1px solid var(--ink); font-size: 17px; }
 .ty-sum-total dt { color: var(--ink); font-weight: 700; }
 .ty-sum-total dd { font-weight: 800; color: var(--red); }
-.ty-sum-address { margin-top: 14px; padding: 12px 14px; background: var(--soft); border-radius: 4px; font-size: 15px; line-height: 1.45; }
+.ty-sum-address { margin-top: 14px; padding: 12px 14px; background: #fff; border: 1px solid var(--ty-line); border-radius: 4px; font-size: 15px; line-height: 1.45; }
 .ty-sum-address span { display: block; font-size: 14px; font-weight: 700; }
 .ty-sum-address p { margin: 3px 0 0; }
 
