@@ -43,7 +43,7 @@
 
   // Toate județele
   const county = one("[data-county]");
-  COUNTIES.forEach((c) => county.add(new Option(c, c)));
+  if (county.tagName === "SELECT") COUNTIES.forEach((c) => county.add(new Option(c, c)));
 
   // Data estimată de livrare
   if (typeof getOrderDeliveryEstimate === "function") {
@@ -149,7 +149,8 @@
   const normPhone = (v) => v.replace(/[^\d+]/g, "").replace(/^(\+40|0040|40)(?=7)/, "0");
   const rules = {
     phone: (v) => /^0[237]\d{8}$/.test(normPhone(v)),
-    email: (v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)
+    email: (v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v),
+    county: (v) => COUNTIES.includes(v)
   };
   const fields = () => all("input, select", form).filter((el) => el.type !== "radio" && el.type !== "checkbox" && el.closest(".field") && !el.closest("[hidden]") && !el.closest(".coupon-box"));
   const check = (el) => {
@@ -299,3 +300,91 @@ const sync=()=>{const items=[...d.querySelectorAll('[data-checkout-items] .check
 let n=0;items.forEach(a=>{const m=a.querySelector('p').textContent.match(/Cantitate\s*(\d+)/);n+=m?+m[1]:1;});
 c.textContent=n===1?'1 produs':n+' produse';th.innerHTML=items.slice(0,3).map(a=>`<img src="${a.querySelector('img').getAttribute('src')}" alt="">`).join('');};
 new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]'),{childList:true,subtree:true});sync();})();
+
+// Județ + Localitate: ambele se pot scrie, iar sugestiile sunt lista nativă a telefonului (<datalist>).
+// DEMO: listă scurtă de localități. LIVE: lista completă din Avanticart / nomenclatorul GLS.
+(() => {
+  const county = document.querySelector("[data-county]");
+  const city = document.querySelector("[data-city]");
+  if (!county || !city || county.tagName !== "INPUT") return;
+  const countyList = document.getElementById("county-list"), cityList = document.getElementById("city-list");
+  const RAW = {
+    "Alba": "Alba Iulia,Sebeș,Aiud,Blaj",
+    "Arad": "Arad,Ineu,Pecica",
+    "Argeș": "Pitești,Câmpulung,Curtea de Argeș,Mioveni",
+    "Bacău": "Bacău,Onești,Moinești,Comănești",
+    "Bihor": "Oradea,Salonta,Beiuș",
+    "Bistrița-Năsăud": "Bistrița,Năsăud,Beclean",
+    "Botoșani": "Botoșani,Dorohoi",
+    "Brașov": "Brașov,Făgăraș,Râșnov,Săcele,Zărnești",
+    "Brăila": "Brăila",
+    "București": "București",
+    "Buzău": "Buzău,Râmnicu Sărat",
+    "Caraș-Severin": "Reșița,Caransebeș",
+    "Călărași": "Călărași,Oltenița",
+    "Cluj": "Cluj-Napoca,Turda,Dej,Câmpia Turzii,Gherla",
+    "Constanța": "Constanța,Mangalia,Medgidia,Năvodari,Eforie,Cernavodă",
+    "Covasna": "Sfântu Gheorghe,Târgu Secuiesc",
+    "Dâmbovița": "Târgoviște,Moreni,Găești,Pucioasa",
+    "Dolj": "Craiova,Băilești,Calafat",
+    "Galați": "Galați,Tecuci",
+    "Giurgiu": "Giurgiu,Bolintin-Vale",
+    "Gorj": "Târgu Jiu,Motru",
+    "Harghita": "Miercurea Ciuc,Odorheiu Secuiesc,Gheorgheni",
+    "Hunedoara": "Deva,Hunedoara,Petroșani,Brad,Orăștie,Vulcan,Lupeni",
+    "Ialomița": "Slobozia,Fetești,Urziceni",
+    "Iași": "Iași,Pașcani",
+    "Ilfov": "Buftea,Voluntari,Otopeni,Popești-Leordeni,Bragadiru,Chitila,Pantelimon,Brănești",
+    "Maramureș": "Baia Mare,Sighetu Marmației,Borșa",
+    "Mehedinți": "Drobeta-Turnu Severin,Orșova,Strehaia",
+    "Mureș": "Târgu Mureș,Sighișoara,Reghin,Târnăveni",
+    "Neamț": "Piatra Neamț,Roman,Târgu Neamț,Bicaz",
+    "Olt": "Slatina,Caracal",
+    "Prahova": "Ploiești,Câmpina,Sinaia,Bușteni,Breaza,Mizil",
+    "Satu Mare": "Satu Mare,Carei,Negrești-Oaș",
+    "Sălaj": "Zalău,Jibou,Șimleu Silvaniei",
+    "Sibiu": "Sibiu,Mediaș,Cisnădie,Agnita",
+    "Suceava": "Suceava,Fălticeni,Rădăuți,Vatra Dornei",
+    "Teleorman": "Alexandria,Roșiorii de Vede,Turnu Măgurele",
+    "Timiș": "Timișoara,Lugoj,Jimbolia,Sânnicolau Mare",
+    "Tulcea": "Tulcea,Măcin,Babadag",
+    "Vaslui": "Vaslui,Bârlad,Huși",
+    "Vâlcea": "Râmnicu Vâlcea,Drăgășani,Horezu",
+    "Vrancea": "Focșani,Adjud"
+  };
+  const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const COUNTY_NAMES = Object.keys(RAW);
+  const PLACES = Object.entries(RAW).flatMap(([c, n]) => n.split(",").map((name) => ({ name, county: c })));
+  const opt = (v, label) => { const o = document.createElement("option"); o.value = v; if (label) o.label = label; return o; };
+  countyList.replaceChildren(...COUNTY_NAMES.map((c) => opt(c)));
+  const findCounty = (v) => { const k = norm(v).replace(/^(judetul|jud\.?|municipiul)\s*/, ""); return COUNTY_NAMES.find((c) => norm(c) === k); };
+  // localitățile se filtrează după județ; fără județ, apar toate, cu județul alături
+  const fillCities = () => {
+    const c = findCounty(county.value);
+    const items = c ? PLACES.filter((p) => p.county === c) : PLACES;
+    cityList.replaceChildren(...items.map((p) => opt(p.name, c ? "" : "jud. " + p.county)));
+  };
+  const setValid = (el, ok) => { const f = el.closest(".field"); f.classList.toggle("is-invalid", !ok); f.classList.toggle("is-valid", ok); };
+  // județ: „brasov” → „Brașov”; dacă nu există, cere corectare
+  const fixCounty = () => {
+    if (!county.value.trim()) return;
+    const c = findCounty(county.value);
+    if (c) county.value = c;
+    setValid(county, !!c);
+    fillCities();
+  };
+  // localitate: corectează diacriticele dacă e în listă; dacă județul lipsește, îl completează
+  const fixCity = () => {
+    const v = city.value; if (!v.trim()) return;
+    const c = findCounty(county.value);
+    const hit = PLACES.find((p) => norm(p.name) === norm(v) && (!c || p.county === c));
+    if (hit) { city.value = hit.name; if (!c) { county.value = hit.county; setValid(county, true); fillCities(); } }
+  };
+  county.addEventListener("input", () => { if (findCounty(county.value)) fixCounty(); else fillCities(); });
+  county.addEventListener("change", fixCounty);
+  county.addEventListener("blur", fixCounty);
+  city.addEventListener("input", () => { if (PLACES.some((p) => p.name === city.value)) fixCity(); });
+  city.addEventListener("change", fixCity);
+  city.addEventListener("blur", fixCity);
+  fillCities();
+})();
