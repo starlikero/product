@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Comanda a fost înregistrată | ePieleNaturala.ro</title>
+  <link rel="stylesheet" href="commerce-flow.css?v=42" />
+  <link rel="stylesheet" href="confirmare.css?v=25" />
+</head>
+<body class="ty-page">
+  <header class="ty-header"><a href="index.html"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /></a></header>
+
+  <main class="ty-main">
+    <div class="ty-cols" data-confirmation hidden>
+
+      <!-- 1. Comanda e înregistrată: „eticheta” coletului -->
+      <section class="ty-hero" aria-labelledby="ty-title">
+        <h1 id="ty-title"><span data-thanks>Ai ales perfect!</span> <svg class="ty-heart ty-heart-title" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.5 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.5 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg></h1>
+        <p class="ty-lead">Mulțumim pentru comandă. E înregistrată și îți pregătim coletul.</p>
+
+        <article class="ty-parcel" aria-label="Coletul tău">
+          <div class="ty-parcel-head">
+            <span class="ty-parcel-thumbs" data-parcel-photos></span>
+            <div class="ty-parcel-id"><span>Comanda nr.</span><strong data-order-number></strong></div>
+            <span class="ty-stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>Confirmată</span>
+          </div>
+
+          <ol class="ty-route" aria-label="Drumul coletului">
+            <li class="is-done"><i aria-hidden="true"></i><strong>Comandă plasată</strong><small data-placed-at></small></li>
+            <li class="is-next" data-step-dispatch><i aria-hidden="true"></i><strong data-dispatch-title>Pleacă</strong><small data-dispatch-text></small></li>
+            <li><i aria-hidden="true"></i><strong data-arrive-title>Ajunge la tine</strong><small data-arrive-text></small></li>
+          </ol>
+          <p class="ty-route-note" data-route-note></p>
+
+          <ul class="ty-parcel-facts">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg><span data-email-line></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg><span data-pay-line></span></li>
+          </ul>
+        </article>
+      </section>
+
+      <aside class="ty-side">
+      <!-- 2. Cont dintr-un pas (doar pentru comenzi fără cont) -->
+      <section class="ty-account" data-guest-account hidden aria-labelledby="ty-account-title">
+        <div data-account-form-wrap>
+          <h2 id="ty-account-title">Data viitoare îți va fi și mai ușor!</h2>
+          <p class="ty-account-lead" data-account-lead>Fă-ți un cont și ai toate comenzile la îndemână.<br />Dacă ai nevoie de altă mărime sau de un retur, rezolvi mai simplu.</p>
+          <ul class="ty-benefits">
+            <li>Ai acces la istoricul comenzilor tale</li>
+            <li>Urmărești statusul comenzii în timp real</li>
+            <li>Returnezi simplu și rapid</li>
+          </ul>
+          <form class="ty-account-form" novalidate>
+            <div class="ty-email-known" data-email-known hidden><span>Emailul contului</span><b data-email></b></div>
+            <label class="ty-field" data-email-field><span>Email</span><input type="email" name="accountEmail" autocomplete="email" inputmode="email" required /><small class="ty-error">Scrie o adresă de email validă.</small></label>
+            <label class="ty-field ty-pass"><span>Alege o parolă</span><input type="password" name="accountPassword" autocomplete="new-password" minlength="6" required /><button type="button" class="ty-eye" data-toggle-pass aria-label="Arată parola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><small class="ty-error">Parola trebuie să aibă minimum 6 caractere.</small></label>
+            <button class="primary-cta ty-cta" type="submit"><span>CREEAZĂ CONTUL</span></button>
+          </form>
+        </div>
+        <div class="ty-account-done" data-account-done hidden role="status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>
+          <div><strong>Contul tău e creat</strong><small>Comanda de azi o găsești în istoricul comenzilor.</small></div>
+        </div>
+      </section>
+
+      <!-- 3. Sumar scurt -->
+      <section class="ty-order" aria-labelledby="ty-order-title">
+        <h2 id="ty-order-title"><svg class="ty-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.5 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.5 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg>Ne place ce ai ales</h2>
+        <p class="ty-order-lead" data-order-lead>Abia așteptăm să le porți și să ne spui cât de mult îți plac.</p>
+        <div data-order-items></div>
+        <dl class="ty-sum-lines">
+          <div><dt>Subtotal</dt><dd data-order-subtotal></dd></div>
+          <div data-order-discount-row hidden><dt>Reducere</dt><dd data-order-discount></dd></div>
+          <div><dt>Livrare</dt><dd data-order-shipping></dd></div>
+          <div class="ty-sum-total"><dt>Total</dt><dd data-order-total></dd></div>
+        </dl>
+        <div class="ty-sum-address"><span data-address-title>Livrăm la</span><p data-address></p></div>
+      </section>
+
+      <a class="ty-help" href="tel:0377101458"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>Ai greșit ceva în comandă? Sună-ne la <b>0377 101 458</b></span></a>
+      <a class="ty-back" href="index.html">Continuă cumpărăturile</a>
+      <p class="ty-demo">Previzualizare demonstrativă. Nu s-a înregistrat o comandă reală.</p>
+      </aside>
+    </div>
+
+    <div class="ty-empty" data-no-order hidden><h1>Nu există o comandă de afișat.</h1><p><a href="index.html">Mergi la pagina produsului</a></p></div>
+  </main>
+
+  <script src="delivery-estimate.js?v=3"></script>
+  <script src="confirmare.js?v=22"></script>
+</body>
+</html>
