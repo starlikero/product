@@ -24,6 +24,8 @@ function getOrderDeliveryEstimate(createdAt) {
     explanation: beforeCutoff
       ? "Comandă plasată înainte de 16:00. Livrare în 1–2 zile lucrătoare, fără weekend."
       : "Expediere în următoarea zi lucrătoare, apoi livrare în 1–2 zile lucrătoare. Weekendul nu se include.",
-    first: first.toISOString().slice(0, 10), last: last.toISOString().slice(0, 10), beforeCutoff
+    first: first.toISOString().slice(0, 10), last: last.toISOString().slice(0, 10), beforeCutoff,
+    // pentru pagina de mulțumire: ziua în care pleacă coletul
+    dispatch: dispatch.toISOString().slice(0, 10), dispatchDays: Math.round((dispatch - date) / 86400000)
   };
 }
