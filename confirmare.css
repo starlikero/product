@@ -1,141 +1,92 @@
-/* =====================================================================
-   PAGINA DE MULȚUMIRE
-   1) „eticheta” coletului: comanda e înregistrată + când pleacă / ajunge
-   2) cont dintr-un pas (doar parola)   3) sumar scurt
-   ===================================================================== */
-.ty-page { padding: 0 !important; --ty-mint: #f2fcfc; --ty-line: rgba(24,23,22,.16); min-height: 100dvh; display: flex; flex-direction: column; background: #fff; }
-html:has(.ty-page) { background: linear-gradient(#fff 50%, #f2fcfc 50%); }
-.ty-header { display: flex; justify-content: center; padding: 14px 16px; background: #fff; border-bottom: 1px solid var(--ty-line); }
-.ty-header img { width: 136px; height: auto; }
-.ty-main { width: 100%; flex: 1; display: flex; flex-direction: column; }
-.ty-cols { flex: 1; display: flex; flex-direction: column; }
-.ty-empty { width: calc(100% - 32px); max-width: 528px; margin: 0 auto; }
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Comanda a fost înregistrată | ePieleNaturala.ro</title>
+  <link rel="stylesheet" href="commerce-flow.css?v=42" />
+  <link rel="stylesheet" href="confirmare.css?v=25" />
+</head>
+<body class="ty-page">
+  <header class="ty-header"><a href="index.html"><img src="assets/epiele-logo-colored.svg" alt="ePieleNaturala.ro" /></a></header>
 
-/* stânga: mulțumim + eticheta coletului */
-.ty-hero { padding: 24px 16px 30px; }
-.ty-hero > * { max-width: 528px; margin-left: auto; margin-right: auto; }
-.ty-hero h1 { margin-top: 0; margin-bottom: 0; font-size: 29px; line-height: 1.12; font-weight: 800; letter-spacing: -.015em; }
-.ty-lead { margin-top: 8px; margin-bottom: 0; font-size: 15px; line-height: 1.45; color: var(--muted); }
+  <main class="ty-main">
+    <div class="ty-cols" data-confirmation hidden>
 
-/* dreapta (pe mobil: jos): cont + sumar, pe fundal mentă ca la checkout */
-.ty-side { flex: 1; padding: 24px 16px calc(28px + env(safe-area-inset-bottom)); background: var(--ty-mint); }
-.ty-side > * { width: 100%; max-width: 528px; margin-left: auto; margin-right: auto; }
+      <!-- 1. Comanda e înregistrată: „eticheta” coletului -->
+      <section class="ty-hero" aria-labelledby="ty-title">
+        <h1 id="ty-title"><span data-thanks>Ai ales perfect!</span> <svg class="ty-heart ty-heart-title" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.5 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.5 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg></h1>
+        <p class="ty-lead">Mulțumim pentru comandă. E înregistrată și îți pregătim coletul.</p>
 
-.ty-parcel { position: relative; margin-top: 22px; padding: 20px 18px 6px; background: #fff; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
-.ty-parcel-head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding-top: 6px; }
-.ty-parcel-thumbs { display: flex; justify-self: start; }
-.ty-parcel-thumbs img { width: 56px; height: 76px; object-fit: cover; border-radius: 4px; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(24,23,22,.2); background: #fff; }
-.ty-parcel-thumbs img + img { margin-left: -18px; }
-.ty-parcel-id { min-width: 0; text-align: center; }
-.ty-parcel-id span { display: block; font-size: 16px; color: var(--ink); }
-.ty-parcel-id strong { display: block; margin-top: 2px; font-size: 30px; line-height: 1.1; font-weight: 800; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
-/* eticheta „Confirmată”, lipită pe colțul cardului */
-.ty-stamp { position: absolute; top: -13px; right: 14px; display: flex; align-items: center; gap: 6px; padding: 6px 12px 6px 9px; color: #fff; background: var(--green); border: 1.5px solid var(--ink); border-radius: 40px; font-size: 14px; font-weight: 800; transform: rotate(-3deg); }
-.ty-stamp svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        <article class="ty-parcel" aria-label="Coletul tău">
+          <div class="ty-parcel-head">
+            <span class="ty-parcel-thumbs" data-parcel-photos></span>
+            <div class="ty-parcel-id"><span>Comanda nr.</span><strong data-order-number></strong></div>
+            <span class="ty-stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>Confirmată</span>
+          </div>
 
-/* drumul coletului: listă verticală, rânduri egale */
-.ty-route { list-style: none; margin: 20px 0 0; padding: 0; position: relative; }
-.ty-route li { position: relative; display: grid; grid-template-columns: 22px 1fr auto; gap: 14px; align-items: center; min-height: 46px; }
-.ty-route li + li::before { content: ""; position: absolute; left: 9.5px; top: -14px; height: 28px; width: 3px; border-radius: 2px; background: var(--ty-line); }
-.ty-route li:nth-child(2)::before { background: var(--green); transform-origin: top; animation: ty-fill .7s .3s ease-out both; }
-@keyframes ty-fill { from { transform: scaleY(0); } }
-.ty-route i { position: relative; z-index: 1; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--ty-line); box-sizing: border-box; }
-.ty-route .is-done i { background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") no-repeat center / 13px; border-color: var(--green); }
-.ty-route .is-next i { border-color: var(--green); animation: ty-pulse 1.6s 1s ease-out 2; }
-@keyframes ty-pulse { 0% { box-shadow: 0 0 0 0 rgba(19,122,76,.45); } 100% { box-shadow: 0 0 0 10px rgba(19,122,76,0); } }
-.ty-route strong { font-size: 16px; line-height: 1.3; font-weight: 700; }
-.ty-route small { font-size: 15px; line-height: 1.3; color: var(--muted); text-align: right; white-space: nowrap; }
-.ty-route .is-next strong, .ty-route .is-today small { color: var(--green); }
-.ty-route .is-today small { font-weight: 700; }
-.ty-route-note { margin: 10px 0 0 36px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+          <ol class="ty-route" aria-label="Drumul coletului">
+            <li class="is-done"><i aria-hidden="true"></i><strong>Comandă plasată</strong><small data-placed-at></small></li>
+            <li class="is-next" data-step-dispatch><i aria-hidden="true"></i><strong data-dispatch-title>Pleacă</strong><small data-dispatch-text></small></li>
+            <li><i aria-hidden="true"></i><strong data-arrive-title>Ajunge la tine</strong><small data-arrive-text></small></li>
+          </ol>
+          <p class="ty-route-note" data-route-note></p>
 
-.ty-parcel-facts { list-style: none; margin: 16px -18px 0; padding: 4px 18px 0; border-top: 1px dashed rgba(24,23,22,.35); }
-.ty-parcel-facts li { display: grid; grid-template-columns: 22px 1fr; gap: 14px; align-items: start; padding: 12px 0; font-size: 15px; line-height: 1.4; }
-.ty-parcel-facts li + li { border-top: 1px solid rgba(24,23,22,.08); }
-.ty-parcel-facts svg { width: 22px; height: 22px; }
-.ty-parcel-facts b { font-weight: 700; word-break: break-word; }
-.ty-parcel-facts li > span { color: var(--ink); font-weight: 600; }
-.ty-parcel-facts small { display: block; margin-top: 2px; color: var(--muted); font-size: 14px; font-weight: 400; }
-.ty-page sup.dec { font-size: .6em; }
+          <ul class="ty-parcel-facts">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg><span data-email-line></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg><span data-pay-line></span></li>
+          </ul>
+        </article>
+      </section>
 
-/* 2. Cont — card alb pe fundalul mentă, cu chenarul și umbra din site */
-.ty-account { margin-top: 0; padding: 24px 18px 22px; background: #f2fcfc; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
-.ty-account h2 { margin: 0; font-size: 23px; line-height: 1.2; font-weight: 800; }
-.ty-account-lead { margin: 8px 0 0; font-size: 16px; line-height: 1.45; }
-.ty-benefits { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
-.ty-benefits li { position: relative; padding-left: 30px; font-size: 16px; line-height: 1.35; }
-.ty-benefits li::before { content: ""; position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #181716 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") no-repeat center / 12px; }
-.ty-account-form { margin-top: 20px; padding-top: 18px; display: grid; gap: 16px; border-top: 1px solid var(--ty-line); }
-.ty-email-known span { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-.ty-email-known b { display: block; padding: 13px 14px; font-size: 16px; font-weight: 600; background: #fff; border: 1px solid var(--ty-line); border-radius: 4px; word-break: break-all; }
-.ty-field { position: relative; display: block; }
-.ty-field[hidden] { display: none; }
-.ty-field > span { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
-.ty-field input { width: 100%; height: 52px; padding: 0 14px; font-size: 16px; color: var(--ink); background: #fff; border: 1px solid #8f8c87; border-radius: 4px; outline: none; }
-.ty-field input:focus { border-color: var(--ink); box-shadow: 0 0 0 2px rgba(23,23,25,.12); }
-.ty-pass input { padding-right: 52px; }
-.ty-eye { position: absolute; right: 2px; bottom: 2px; width: 48px; height: 48px; display: grid; place-items: center; background: none; border: 0; cursor: pointer; color: #77746f; }
-.ty-eye svg { width: 22px; height: 22px; }
-.ty-eye[aria-pressed="true"] { color: var(--ink); }
-.ty-error { display: none; margin-top: 6px; font-size: 14px; font-weight: 600; color: var(--red); }
-.ty-field.is-invalid input { border-color: var(--red); }
-.ty-field.is-invalid .ty-error { display: block; }
-.ty-cta { width: 100%; }
-.ty-cta span { font-size: 17px; }
-.ty-account-done { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
-.ty-account-done[hidden] { display: none; }
-.ty-account-done svg { width: 32px; height: 32px; fill: var(--green); stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.ty-account-done circle { stroke: none; }
-.ty-account-done strong { display: block; font-size: 19px; font-weight: 800; }
-.ty-account-done small { display: block; margin-top: 4px; font-size: 15px; line-height: 1.4; }
+      <aside class="ty-side">
+      <!-- 2. Cont dintr-un pas (doar pentru comenzi fără cont) -->
+      <section class="ty-account" data-guest-account hidden aria-labelledby="ty-account-title">
+        <div data-account-form-wrap>
+          <h2 id="ty-account-title">Data viitoare îți va fi și mai ușor!</h2>
+          <p class="ty-account-lead" data-account-lead>Fă-ți un cont și ai toate comenzile la îndemână.<br />Dacă ai nevoie de altă mărime sau de un retur, rezolvi mai simplu.</p>
+          <ul class="ty-benefits">
+            <li>Ai acces la istoricul comenzilor tale</li>
+            <li>Urmărești statusul comenzii în timp real</li>
+            <li>Returnezi simplu și rapid</li>
+          </ul>
+          <form class="ty-account-form" novalidate>
+            <div class="ty-email-known" data-email-known hidden><span>Emailul contului</span><b data-email></b></div>
+            <label class="ty-field" data-email-field><span>Email</span><input type="email" name="accountEmail" autocomplete="email" inputmode="email" required /><small class="ty-error">Scrie o adresă de email validă.</small></label>
+            <label class="ty-field ty-pass"><span>Alege o parolă</span><input type="password" name="accountPassword" autocomplete="new-password" minlength="6" required /><button type="button" class="ty-eye" data-toggle-pass aria-label="Arată parola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button><small class="ty-error">Parola trebuie să aibă minimum 6 caractere.</small></label>
+            <button class="primary-cta ty-cta" type="submit"><span>CREEAZĂ CONTUL</span></button>
+          </form>
+        </div>
+        <div class="ty-account-done" data-account-done hidden role="status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>
+          <div><strong>Contul tău e creat</strong><small>Comanda de azi o găsești în istoricul comenzilor.</small></div>
+        </div>
+      </section>
 
-/* 3. Ce ai ales — card la fel ca celelalte, cu inimioare */
-.ty-order { margin-top: 26px; padding: 20px 18px 18px; background: #f2fcfc; border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 var(--ink); }
-.ty-order h2 { display: flex; align-items: center; gap: 9px; margin: 0 0 6px; font-size: 21px; line-height: 1.2; font-weight: 800; }
-.ty-order h2 small { margin-left: auto; font-size: 15px; font-weight: 500; color: var(--muted); }
-.ty-order-lead { margin: 0 0 6px; font-size: 15px; line-height: 1.45; color: var(--muted); }
-.ty-heart { width: 22px; height: 22px; fill: var(--red); flex: 0 0 auto; overflow: visible; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; filter: drop-shadow(2px 2px 0 var(--ink)); }
-.ty-heart-title { display: inline-block; width: .8em; height: .8em; vertical-align: -.06em; overflow: visible; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; filter: drop-shadow(2px 2px 0 var(--ink)); }
-.ty-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid rgba(24,23,22,.08); }
-.ty-order-lead + div .ty-item:first-child { border-top: 0; }
-.ty-item-photo { position: relative; display: block; width: 64px; height: 64px; }
-.ty-item-photo img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; box-shadow: 0 0 0 1px rgba(24,23,22,.12); }
-.ty-item-photo i { position: absolute; right: -6px; bottom: -6px; width: 24px; height: 24px; border-radius: 50%; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e31d2b' d='M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.5 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.5 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z'/%3E%3C/svg%3E") no-repeat center / 15px; box-shadow: 0 0 0 1.5px var(--ink); }
-.ty-item strong { display: block; font-size: 15px; font-weight: 600; line-height: 1.3; }
-.ty-item small { display: block; margin-top: 3px; font-size: 14px; color: var(--muted); }
-.ty-item > span:last-child { font-size: 15px; font-weight: 700; white-space: nowrap; }
-.ty-sum-lines { margin: 4px 0 0; padding: 10px 0 0; border-top: 1px solid var(--ty-line); }
-.ty-sum-lines div { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; font-size: 15px; }
-.ty-sum-lines div[hidden] { display: none; }
-.ty-sum-lines dt { color: var(--muted); }
-.ty-sum-lines dd { margin: 0; font-weight: 600; }
-.ty-sum-lines .ty-sum-total { margin-top: 6px; padding-top: 9px; border-top: 1px solid var(--ink); font-size: 17px; }
-.ty-sum-total dt { color: var(--ink); font-weight: 700; }
-.ty-sum-total dd { font-weight: 800; color: var(--red); }
-.ty-sum-address { margin-top: 14px; padding: 12px 14px; background: #fff; border: 1px solid var(--ty-line); border-radius: 4px; font-size: 15px; line-height: 1.45; }
-.ty-sum-address span { display: block; font-size: 14px; font-weight: 700; }
-.ty-sum-address p { margin: 3px 0 0; }
+      <!-- 3. Sumar scurt -->
+      <section class="ty-order" aria-labelledby="ty-order-title">
+        <h2 id="ty-order-title"><svg class="ty-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8.2 3.5 4.5 7 4.5c2.1 0 3.6 1.2 5 3 1.4-1.8 2.9-3 5-3 3.5 0 5.5 3.7 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2Z"/></svg>Ne place ce ai ales</h2>
+        <p class="ty-order-lead" data-order-lead>Abia așteptăm să le porți și să ne spui cât de mult îți plac.</p>
+        <div data-order-items></div>
+        <dl class="ty-sum-lines">
+          <div><dt>Subtotal</dt><dd data-order-subtotal></dd></div>
+          <div data-order-discount-row hidden><dt>Reducere</dt><dd data-order-discount></dd></div>
+          <div><dt>Livrare</dt><dd data-order-shipping></dd></div>
+          <div class="ty-sum-total"><dt>Total</dt><dd data-order-total></dd></div>
+        </dl>
+        <div class="ty-sum-address"><span data-address-title>Livrăm la</span><p data-address></p></div>
+      </section>
 
-.ty-help { display: flex !important; align-items: center; gap: 10px; margin-top: 18px; font-size: 15px; line-height: 1.4; color: var(--ink); text-decoration: none; }
-.ty-help svg { width: 20px; height: 20px; flex: 0 0 auto; }
-.ty-help b { white-space: nowrap; }
-.ty-side > .ty-back { display: table; width: auto; margin-top: 26px; padding-bottom: 2px; font-size: 16px; font-weight: 700; color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); }
-.ty-empty { text-align: center; padding: 40px 0; }
-.ty-side > .ty-demo { margin-top: 24px; margin-bottom: 0; text-align: center; font-size: 12px; color: var(--muted); }
+      <a class="ty-help" href="tel:0377101458"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>Ai greșit ceva în comandă? Sună-ne la <b>0377 101 458</b></span></a>
+      <a class="ty-back" href="index.html">Continuă cumpărăturile</a>
+      <p class="ty-demo">Previzualizare demonstrativă. Nu s-a înregistrat o comandă reală.</p>
+      </aside>
+    </div>
 
-@media (min-width: 901px) {
-  /* stânga-dreapta, ca la checkout: alb | mentă */
-  html:has(.ty-page), .ty-page { background: linear-gradient(90deg, #fff 0 50%, #f2fcfc 50% 100%); }
-  .ty-header { background: linear-gradient(90deg, #fff 0 50%, var(--ty-mint) 50% 100%); }
-  .ty-cols { flex-direction: row; align-items: stretch; }
-  .ty-hero { flex: 0 0 50%; padding: 48px 56px 48px 24px; }
-  .ty-hero > * { max-width: 540px; margin-right: 0; }
-  .ty-hero h1 { font-size: 38px; }
-  .ty-side { flex: 0 0 50%; padding: 48px 24px 48px 56px; border-top: 0; }
-  .ty-side > * { max-width: 460px; margin-left: 0; }
-  .ty-account { padding: 28px 28px 26px; }
-  .ty-side { position: relative; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ty-route li::before, .ty-route .is-next i { animation: none !important; }
-}
+    <div class="ty-empty" data-no-order hidden><h1>Nu există o comandă de afișat.</h1><p><a href="index.html">Mergi la pagina produsului</a></p></div>
+  </main>
+
+  <script src="delivery-estimate.js?v=3"></script>
+  <script src="confirmare.js?v=22"></script>
+</body>
+</html>
