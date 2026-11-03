@@ -434,6 +434,7 @@ new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]
       const it = shown[i]; if (!it) return;
       input.value = it.value; typed = false; close();
       onPick(it);
+      input.blur(); // se închide și tastatura; următorul câmp se deschide doar când îl atingi
       input.dispatchEvent(new Event("change", { bubbles: true }));
     };
 
@@ -452,6 +453,8 @@ new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]
       const auto = document.activeElement !== input || ((!e.inputType || e.inputType === "insertReplacementText") && isKnown(input.value));
       if (auto) { close(); fix(); return; }
       typed = true; render();
+      // a scris complet un nume unic din listă → se închide singură
+      if (shown.length === 1 && norm(shown[0].value) === norm(input.value)) pick(0);
     });
     input.addEventListener("blur", () => setTimeout(() => { if (!touching && document.activeElement !== input) { close(); fix(); } }, 180));
     input.addEventListener("keydown", (e) => {
@@ -482,6 +485,6 @@ new MutationObserver(sync).observe(document.querySelector('[data-checkout-items]
     return { close };
   };
 
-  combo(county, countyItems, () => { fixCounty(); city.focus(); }, fixCounty, (v) => !!findCounty(v));
+  combo(county, countyItems, () => { fixCounty(); }, fixCounty, (v) => !!findCounty(v));
   combo(city, cityItems, (it) => { if (it.county && !findCounty(county.value)) { county.value = it.county; county.dataset.last = it.county; setValid(county, true); } setValid(city, true); }, fixCity, (v) => PLACES.some((p) => norm(p.name) === norm(v)));
 })();
