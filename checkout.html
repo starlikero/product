@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="description" content="Checkout securizat ePieleNaturala.ro" />
   <title>Finalizează comanda | ePieleNaturala.ro</title>
-  <link rel="stylesheet" href="commerce-flow.css?v=41" />
+  <link rel="stylesheet" href="commerce-flow.css?v=42" />
 </head>
 <body data-page="checkout">
   <svg class="svg-defs" aria-hidden="true">
@@ -56,9 +56,9 @@
               <label class="field"><span>Nume</span><input type="text" name="lastName" autocomplete="family-name" autocapitalize="words" required /><small class="field-error">Completează numele.</small></label>
               <label class="field"><span>Prenume</span><input type="text" name="firstName" autocomplete="given-name" autocapitalize="words" required /><small class="field-error">Completează prenumele.</small></label>
             </div>
-            <label class="field"><span>Județ</span><input type="text" name="county" list="county-list" autocomplete="address-level1" autocapitalize="words" placeholder="Scrie sau alege județul" required data-county /><datalist id="county-list"></datalist><small class="field-error">Alege județul.</small></label>
-            <!-- LIVE: listele de județe și localități (datalist) se iau din Avanticart / nomenclatorul GLS -->
-            <label class="field"><span>Localitate</span><input type="text" name="city" list="city-list" autocomplete="address-level2" autocapitalize="words" placeholder="Scrie sau alege localitatea" required data-city /><datalist id="city-list"></datalist><small class="field-error">Completează localitatea.</small></label>
+            <label class="field combo-field"><span>Județ</span><input type="text" name="county" autocomplete="address-level1" autocapitalize="words" enterkeyhint="next" placeholder="Scrie sau alege județul" required data-county role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="county-list" /><i class="combo-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></i><ul class="combo-list" id="county-list" role="listbox" hidden></ul><small class="field-error">Alege județul.</small></label>
+            <!-- LIVE: listele de județe și localități se iau din Avanticart / nomenclatorul GLS (commerce-flow.js, RAW) -->
+            <label class="field combo-field"><span>Localitate</span><input type="text" name="city" autocomplete="address-level2" autocapitalize="words" enterkeyhint="next" placeholder="Scrie sau alege localitatea" required data-city role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="city-list" /><i class="combo-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></i><ul class="combo-list" id="city-list" role="listbox" hidden></ul><small class="field-error">Completează localitatea.</small></label>
             <label class="field"><span>Stradă și număr</span><input type="text" name="address" autocomplete="street-address" autocapitalize="words" placeholder="ex: Calea Victoriei 120, bl. A3, ap. 12" required /><small class="field-error">Completează strada și numărul.</small></label>
           </div>
         </section>
@@ -149,6 +149,6 @@
   </aside>
   <div class="flow-toast" role="status" aria-live="polite" hidden></div>
   <script src="delivery-estimate.js?v=2"></script>
-  <script src="commerce-flow.js?v=42"></script>
+  <script src="commerce-flow.js?v=43"></script>
 </body>
 </html>
